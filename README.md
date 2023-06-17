@@ -25,14 +25,16 @@ rails g func_bot:function <function_name>
           JSON.dump(weather_info)
   ```
 
-- Update the your new function in the list of functions in `lib/func_bot/functions/list.rb`.
+- Update your new function in the list of functions in `lib/func_bot/functions/list.yml`.
   - This is the list of functions that will be available to the bot
   - Adding good descriptions to the functions will help the bot infer when to use which function
-- If the user asks a question that is not related to a function in your list, they'll get a standard response from ChatGPT.
+- If the user asks a question that is not related to a function in your list, the bot will give a response from ChatGPT, without getting input from a function.
 
 `bin/rails c`
 
 ```ruby
+# Uses sample function GetCurrentWeather, can be found in lib/generators/func_bot/templates/get_current_weather.rb
+
 bot = FuncBot::Chat.new "What's the weather like in Miami, FL"
 #<FuncBot::Chat:0x000000010d2d27e8 @history=[], @prompt="What's the weather like in Miami, FL", @role="user">
 bot.open

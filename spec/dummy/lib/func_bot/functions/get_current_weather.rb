@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-# This is a sample function that returns a JSON string
-# that will be fed into the next function in the chain.
-# Please maintain the same format for your functions.
-
+# This is a sample function which returns a JSON string
+# that will be fed into the next function in the chain
+# when the GetCurrentWeather.call(response) function is called.
 # The response from the previous function is passed in as an argument.
 
 module FuncBot
