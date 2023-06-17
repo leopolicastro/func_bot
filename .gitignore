@@ -7,3 +7,6 @@
 /spec/dummy/storage/
 /spec/dummy/tmp/
 .byebug_history
+spec/examples.txt
+spec/dummy/spec/examples.txt
+spec/dummy/config/credentials
