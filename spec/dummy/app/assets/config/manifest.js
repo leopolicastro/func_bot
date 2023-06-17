@@ -1,3 +1,3 @@
 //= link_tree ../images
 //= link_directory ../stylesheets .css
-//= link assistant_manifest.js
+//= link func_bot_manifest.js

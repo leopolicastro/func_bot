@@ -1,4 +1,4 @@
-# Assistant
+# FuncBot
 Short description and motivation.
 
 ## Usage
@@ -8,7 +8,7 @@ How to use my plugin.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "assistant"
+gem "func_bot"
 ```
 
 And then execute:
@@ -18,7 +18,7 @@ $ bundle
 
 Or install it yourself as:
 ```bash
-$ gem install assistant
+$ gem install func_bot
 ```
 
 ## Contributing

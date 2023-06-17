@@ -1,4 +1,4 @@
-module Assistant
+module FuncBot
   module Functions
     class <%= class_name %>
       def self.call(response)

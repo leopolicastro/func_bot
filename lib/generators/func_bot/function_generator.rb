@@ -1,10 +1,10 @@
-module Assistant
+module FuncBot
   class FunctionGenerator < Rails::Generators::NamedBase
     source_root File.expand_path("templates", __dir__)
 
     def generate_function
-      template "function.rb", "lib/assistant/functions/#{file_name}.rb"
-      # copy_file "../../assistant/functions/list.rb", "lib/assistant/functions/list.rb"
+      template "function.rb", "lib/func_bot/functions/#{file_name}.rb"
+      # copy_file "../../func_bot/functions/list.rb", "lib/func_bot/functions/list.rb"
     end
 
     def append_to_functions_list
@@ -16,11 +16,11 @@ module Assistant
     private
 
     def yml_file
-      Rails.root.join("lib", "assistant", "functions", "list.yml")
+      Rails.root.join("lib", "func_bot", "functions", "list.yml")
     end
 
     def function_template
-      {name: "#{class_name}",
+      {name: class_name.to_s,
        description: "TODO: Write a description for this function.",
        parameters: {
          type: "object",

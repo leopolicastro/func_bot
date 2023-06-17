@@ -1,4 +1,4 @@
-module Assistant
+module FuncBot
   class Client
     def self.call(messages)
       client.chat(
@@ -6,7 +6,7 @@ module Assistant
           model: "gpt-3.5-turbo-0613",
           messages: messages,
           temperature: 0.7,
-          functions: Assistant::Functions::List.call
+          functions: FuncBot::Functions::List.call
         }
       )
     end

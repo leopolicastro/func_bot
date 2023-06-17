@@ -1,6 +1,6 @@
 require_relative "../client"
 
-module Assistant
+module FuncBot
   module Functions
     class Handler
       attr_reader :prompt, :history
@@ -10,12 +10,12 @@ module Assistant
         @history = history
         function_return = constantize_function(response).call(response)
         response = respond_to(function_return)
-        history << {role: "assistant", content: dig_for_content(response)}
+        history << {role: "func_bot", content: dig_for_content(response)}
         dig_for_content(response)
       end
 
       def self.constantize_function(response)
-        "Assistant::Functions::#{function_name(response)}".constantize
+        "FuncBot::Functions::#{function_name(response)}".constantize
       end
 
       def self.function_name(response = {})

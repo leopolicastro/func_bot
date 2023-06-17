@@ -1,2 +1,2 @@
-Assistant::Engine.routes.draw do
+FuncBot::Engine.routes.draw do
 end

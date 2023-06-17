@@ -17,7 +17,7 @@ require "action_cable/engine"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
-require "assistant"
+require "func_bot"
 
 module Dummy
   class Application < Rails::Application
@@ -36,6 +36,6 @@ module Dummy
 
     # Don't generate system test files.
     config.generators.system_tests = nil
-    config.autoload_paths << Rails.root.join("lib/assistant/functions")
+    config.autoload_paths << Rails.root.join("lib/func_bot/functions")
   end
 end

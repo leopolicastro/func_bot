@@ -1,4 +1,4 @@
-module Assistant
+module FuncBot
   module Functions
     class GetCurrentWeather
       def self.call(response)

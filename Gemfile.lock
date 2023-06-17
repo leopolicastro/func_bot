@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    assistant (0.1.0)
+    func_bot (0.1.0)
       rails (>= 7.0.5)
       ruby-openai
 
@@ -223,7 +223,7 @@ PLATFORMS
   arm64-darwin-22
 
 DEPENDENCIES
-  assistant!
+  func_bot!
   byebug
   pg
   puma

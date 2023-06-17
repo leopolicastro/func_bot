@@ -1,6 +1,6 @@
 require_relative "functions/handler"
 
-module Assistant
+module FuncBot
   class Chat
     attr_reader :prompt
     attr_accessor :history
@@ -30,7 +30,7 @@ module Assistant
     end
 
     def handle_chat_response(response)
-      history << {role: "assistant", content: dig_for_content(response)}
+      history << {role: "func_bot", content: dig_for_content(response)}
       dig_for_content(response)
     end
 

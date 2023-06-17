@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  mount Assistant::Engine => "/assistant"
+  mount FuncBot::Engine => "/func_bot"
 end
