@@ -10,8 +10,9 @@ require "factory_bot_rails"
 require "faker"
 require "shoulda-matchers"
 require "byebug"
+require "vcr"
 
-require_relative "../lib/generators/func_bot/templates/get_current_weather"
+# require_relative "../lib/generators/func_bot/templates/get_current_weather"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -66,4 +67,9 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+end
+
+VCR.configure do |config|
+  config.cassette_library_dir = "spec/cassettes"
+  config.hook_into :webmock
 end

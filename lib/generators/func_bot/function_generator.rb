@@ -4,13 +4,12 @@ module FuncBot
 
     def generate_function
       template "function.rb", "lib/func_bot/functions/#{file_name}.rb"
-      # copy_file "../../func_bot/functions/list.rb", "lib/func_bot/functions/list.rb"
     end
 
     def append_to_functions_list
-      current_yml = YAML.load_file(yml_file)
-      current_yml["functions"] << function_template
-      File.write(yml_file, current_yml.to_yaml.gsub("---\n", ""))
+      yml = YAML.load_file(yml_file)
+      yml["functions"] << function_template
+      File.write(yml_file, yml.to_yaml.gsub("---\n", ""))
     end
 
     private
@@ -23,7 +22,7 @@ module FuncBot
       {name: class_name.to_s,
        description: "TODO: Write a description for this function.",
        parameters: {
-         type: "object",
+         type: "TODO: choose from string, integer, boolean, object, etc.",
          properties: {
            location: {
              type: "TODO: Write a type for this parameter. e.g. string, integer, etc.",

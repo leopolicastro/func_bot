@@ -44,19 +44,15 @@ RSpec.describe FuncBot::Functions::Handler do
     end
   end
 
-  xdescribe ".constantize_function" do
+  describe ".constantize_function" do
     it "constantizes the function name and returns the function" do
       response = double("response")
-      function_class = double("function_class")
       allow(FuncBot::Functions::Handler).to receive(:function_name)
         .with(response)
         .and_return("GetCurrentWeather")
 
-      expect("FuncBot::Functions::GetCurrentWeather").to receive(:constantize)
-        .and_return(function_class)
-
       result = FuncBot::Functions::Handler.constantize_function(response)
-      expect(result).to eq(function_class)
+      expect(result).to eq("FuncBot::Functions::GetCurrentWeather".constantize)
     end
   end
 
@@ -94,12 +90,13 @@ RSpec.describe FuncBot::Functions::Handler do
     let(:prompt) { "prompt_message" }
     let(:function_name) { "function_name" }
 
-    xit "adds the prompt to the history and returns the messages" do
+    it "adds the prompt to the history and returns the messages" do
       allow(FuncBot::Functions::Handler).to receive(:function_name)
         .and_return(function_name)
 
       result = FuncBot::Functions::Handler.messages
-      expect(result).to eq([{role: "function", content: prompt, name: function_name}])
+      expect(result).to eq([{:content => "content_value", :role => "func_bot"},
+        {:content => "prompt_message", :name => "function_name", :role => "function"}])
     end
   end
 end

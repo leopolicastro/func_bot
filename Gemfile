@@ -21,3 +21,5 @@ group :development, :test do
   gem "vcr"
   gem "coderay"
 end
+gem "simplecov", require: false, group: :test
+gem "generator_spec", group: :test

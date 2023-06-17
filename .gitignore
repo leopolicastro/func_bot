@@ -10,3 +10,6 @@
 spec/examples.txt
 spec/dummy/spec/examples.txt
 spec/dummy/config/credentials
+/config/credentials/test.key
+spec/dummy/coverage/
+spec/dummy/.vscode/
