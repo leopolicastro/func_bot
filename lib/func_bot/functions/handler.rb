@@ -5,34 +5,36 @@ module FuncBot
     class Handler
       attr_reader :prompt, :history
 
-      def self.call(response, history)
-        @function_name = nil
-        @history = history
-        function_return = constantize_function(response).call(response)
-        response = respond_to(function_return)
-        history << {role: "func_bot", content: dig_for_content(response)}
-        dig_for_content(response)
-      end
+      class << self
+        def call(response, history)
+          @function_name = nil
+          @history = history
+          function_return = constantize_function(response).call(response)
+          response = respond_to(function_return)
+          history << {role: "func_bot", content: dig_for_content(response)}
+          dig_for_content(response)
+        end
 
-      def self.constantize_function(response)
-        "FuncBot::Functions::#{function_name(response)}".constantize
-      end
+        def constantize_function(response)
+          "FuncBot::Functions::#{function_name(response)}".constantize
+        end
 
-      def self.function_name(response = {})
-        @function_name ||= response.dig("choices", 0, "message", "function_call", "name")
-      end
+        def function_name(response = {})
+          @function_name ||= response.dig("choices", 0, "message", "function_call", "name")
+        end
 
-      def self.dig_for_content(response)
-        response.dig("choices", 0, "message", "content")
-      end
+        def dig_for_content(response)
+          response.dig("choices", 0, "message", "content")
+        end
 
-      def self.respond_to(prompt)
-        @prompt = prompt
-        Client.call(messages)
-      end
+        def respond_to(prompt)
+          @prompt = prompt
+          Client.call(messages)
+        end
 
-      def self.messages
-        @history << {role: "function", content: @prompt, name: function_name}
+        def messages
+          @history << {role: "function", content: @prompt, name: function_name}
+        end
       end
     end
   end
