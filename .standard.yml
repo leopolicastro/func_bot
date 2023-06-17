@@ -1,0 +1,4 @@
+ignore:
+  - "lib/jumpstart/test/dummy/**/*"
+  - "**/*":
+      - Style/HashSyntax

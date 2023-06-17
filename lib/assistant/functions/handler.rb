@@ -6,6 +6,7 @@ module Assistant
       attr_reader :prompt, :history
 
       def self.call(response, history)
+        @function_name = nil
         @history = history
         function_return = constantize_function(response).call(response)
         response = respond_to(function_return)

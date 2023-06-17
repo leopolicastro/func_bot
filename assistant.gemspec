@@ -1,14 +1,14 @@
 require_relative "lib/assistant/version"
 
 Gem::Specification.new do |spec|
-  spec.name        = "assistant"
-  spec.version     = Assistant::VERSION
-  spec.authors     = ["lbp"]
-  spec.email       = ["43428385+leopolicastro@users.noreply.github.com"]
+  spec.name = "assistant"
+  spec.version = Assistant::VERSION
+  spec.authors = ["lbp"]
+  spec.email = ["43428385+leopolicastro@users.noreply.github.com"]
   spec.summary = "Extensible AI Assistant with Function calls."
   spec.description = "Extensible AI Assistant with Function calls."
   spec.homepage = "https://github.com/leopolicastro/assistant"
-  spec.license     = "MIT"
+  spec.license = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
   # to allow pushing to a single host or delete this section to allow pushing to any host.
@@ -26,4 +26,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "vcr"
   spec.add_development_dependency "webmock"
+  spec.add_development_dependency "standard"
+  spec.add_development_dependency "byebug"
 end
