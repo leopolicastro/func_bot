@@ -24,7 +24,7 @@ RSpec.describe FuncBot::Functions::GetCurrentWeather do
       location = JSON.parse(FuncBot::Functions::GetCurrentWeather.call(response))["location"]
       forecast = JSON.parse(FuncBot::Functions::GetCurrentWeather.call(response))["forecast"]
       expect(temp).to eq(98)
-      expect(location).to eq({"location" => "Miami, FL"})
+      expect(location).to eq("Miami, FL")
       expect(forecast).to eq(["sunny", "windy"])
     end
   end

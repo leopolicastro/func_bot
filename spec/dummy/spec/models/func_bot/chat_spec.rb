@@ -5,19 +5,15 @@ RSpec.describe FuncBot::Chat, :vcr do
   let(:response) { {"choices" => [{"message" => {"content" => "Response content"}}]} }
   let(:function_response) { {"choices" => [{"message" => {"function_call" => true}}]} }
 
-  subject { described_class.new(prompt) }
+  subject { described_class.new }
 
   describe "#initialize" do
-    it "sets the prompt" do
-      expect(subject.prompt).to eq(prompt)
-    end
-
     it "initializes history as an empty array" do
       expect(subject.history).to eq([])
     end
   end
 
-  describe "#open" do
+  describe "#ask(prompt)" do
     before do
       allow(FuncBot::Client).to receive(:call).and_return(response)
     end
@@ -25,11 +21,11 @@ RSpec.describe FuncBot::Chat, :vcr do
     context "when the response is not a function call" do
       it "calls handle_chat_response with the response" do
         expect(subject).to receive(:handle_chat_response).with(response)
-        subject.open
+        subject.ask(prompt)
       end
 
       it "adds the chat response to the history" do
-        expect { subject.open }.to change { subject.history.length }.by(2)
+        expect { subject.ask(prompt) }.to change { subject.history.length }.by(2)
       end
     end
 
@@ -40,7 +36,7 @@ RSpec.describe FuncBot::Chat, :vcr do
 
       it "calls Functions::Handler.call with the response and history" do
         expect(FuncBot::Functions::Handler).to receive(:call).with(function_response, subject.history)
-        subject.open
+        subject.ask(prompt)
       end
     end
   end
@@ -98,6 +94,10 @@ RSpec.describe FuncBot::Chat, :vcr do
   end
 
   describe "#messages" do
+    before do
+      subject.role = "user"
+      subject.prompt = prompt
+    end
     it "adds a new message to the history with the user role and prompt content" do
       expect { subject.send(:messages) }.to change { subject.history.length }.by(1)
       expect(subject.history.last).to eq({role: "user", content: prompt})
