@@ -1,0 +1,9 @@
+module Assistant
+  module Functions
+    class <%= class_name %>
+      def self.call(response)
+
+      end
+    end
+  end
+end
