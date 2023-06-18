@@ -1,4 +1,4 @@
-RSpec.describe FuncBot::Chats::Handler do
+RSpec.describe FuncBot::Handlers::BotHandler do
   describe ".call" do
     let(:response) { {"choices" => [{"message" => {"content" => "Hello, world!"}}]} }
     let(:history) { [] }

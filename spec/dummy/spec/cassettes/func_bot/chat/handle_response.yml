@@ -13,7 +13,7 @@ http_interactions:
       Content-Type:
       - application/json
       Authorization:
-      - Bearer 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
+      - Bearer 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
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 18 Jun 2023 13:01:48 GMT
+      - Sun, 18 Jun 2023 13:57:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,7 +42,7 @@ http_interactions:
       Openai-Organization:
       - user-bjareu1vcng10t67nonwisf9
       Openai-Processing-Ms:
-      - '950'
+      - '1015'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
@@ -60,22 +60,22 @@ http_interactions:
       X-Ratelimit-Reset-Tokens:
       - 6ms
       X-Request-Id:
-      - fec928c82f76e4fb882a048c75f6a700
+      - bb969a54adeb6116794b10d5d2686d76
       Cf-Cache-Status:
       - DYNAMIC
       Server:
       - cloudflare
       Cf-Ray:
-      - 7d93b90d98369ab4-MIA
+      - 7d940af24e0b2245-MIA
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-7SmKJnk03JkrTgKPCRWkGMdRhifPR",
+          "id": "chatcmpl-7SnCP7QzAnTSv8WC84uFzDwHcNhVX",
           "object": "chat.completion",
-          "created": 1687093307,
+          "created": 1687096661,
           "model": "gpt-3.5-turbo-0613",
           "choices": [
             {
@@ -97,5 +97,5 @@ http_interactions:
             "total_tokens": 89
           }
         }
-  recorded_at: Sun, 18 Jun 2023 13:01:48 GMT
+  recorded_at: Sun, 18 Jun 2023 13:57:42 GMT
 recorded_with: VCR 6.1.0

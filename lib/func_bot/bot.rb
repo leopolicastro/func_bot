@@ -7,22 +7,26 @@ module FuncBot
     delegate :history, to: :@history
 
     def initialize
-      @history = Chats::History.new
+      @history = Bots::History.new
     end
 
     def ask(prompt)
       @prompt = prompt
       @role = "user"
-      handle_response(Chats::Client.call(chat_history))
+      handle_response(call_openai)
     end
 
     private
 
+    def call_openai
+      Bots::Client.call(chat_history)
+    end
+
     def handle_response(response)
       if function_call?(response)
-        Functions::Handler.call(response, history)
+        Handlers::FunctionHandler.call(response, history)
       else
-        Chats::Handler.call(response, history)
+        Handlers::BotHandler.call(response, history)
       end
     end
 

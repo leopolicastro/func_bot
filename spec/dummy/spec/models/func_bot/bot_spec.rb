@@ -15,16 +15,16 @@ RSpec.describe FuncBot::Bot, :vcr do
 
   describe "#ask(prompt)" do
     before do
-      allow(FuncBot::Chats::Client).to receive(:call).and_return(response)
+      allow(FuncBot::Bots::Client).to receive(:call).and_return(response)
     end
 
     context "when the response is a function call" do
       before do
-        allow(FuncBot::Chats::Client).to receive(:call).and_return(function_response)
+        allow(FuncBot::Bots::Client).to receive(:call).and_return(function_response)
       end
 
-      it "calls Functions::Handler.call with the response and history" do
-        expect(FuncBot::Functions::Handler).to receive(:call).with(function_response, subject.history)
+      it "calls Handlers::FunctionHandler.call with the response and history" do
+        expect(FuncBot::Handlers::FunctionHandler).to receive(:call).with(function_response, subject.history)
         subject.ask(prompt)
       end
     end
@@ -32,12 +32,12 @@ RSpec.describe FuncBot::Bot, :vcr do
 
   describe "#handle_response" do
     context "when the response is a function call" do
-      it "calls Functions::Handler.call with the response and history" do
+      it "calls Handlers::FunctionHandler.call with the response and history" do
         VCR.use_cassette("func_bot/chat/handle_response") do
-          expect(FuncBot::Functions::Handler).to receive(:call)
+          expect(FuncBot::Handlers::FunctionHandler).to receive(:call)
 
           subject.send(:handle_response,
-            FuncBot::Chats::Client.call(
+            FuncBot::Bots::Client.call(
               [
                 {
                   "role" => "user",
@@ -50,8 +50,8 @@ RSpec.describe FuncBot::Bot, :vcr do
     end
 
     context "when the response is not a function call" do
-      it "calls the Chats::Handler.call method" do
-        expect(FuncBot::Chats::Handler).to receive(:call)
+      it "calls the Handlers::BotHandler.call method" do
+        expect(FuncBot::Handlers::BotHandler).to receive(:call)
         subject.send(:handle_response, response)
       end
     end

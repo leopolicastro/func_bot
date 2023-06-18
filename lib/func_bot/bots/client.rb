@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module FuncBot
-  module Chats
+  module Bots
     class Client
       def self.call(messages)
         client.chat(

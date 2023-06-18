@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module FuncBot
-  module Functions
-    class Handler
+  module Handlers
+    class FunctionHandler
       attr_reader :prompt, :history
 
       class << self
@@ -29,7 +29,7 @@ module FuncBot
 
         def respond_to(prompt)
           @prompt = prompt
-          Chats::Client.call(messages)
+          Bots::Client.call(messages)
         end
 
         def messages

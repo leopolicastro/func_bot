@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module FuncBot
-  module Chats
-    class Handler
+  module Handlers
+    class BotHandler
       class << self
         def call(response, history)
           history << {role: "assistant", content: dig_for_content(response)}
