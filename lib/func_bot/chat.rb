@@ -1,18 +1,21 @@
 require_relative "functions/handler"
 require_relative "chats/handler"
+require_relative "chats/history"
 
 module FuncBot
   class Chat
-    attr_accessor :history, :role, :prompt
+    attr_accessor :role, :prompt
+
+    delegate :history, to: :@history
 
     def initialize
-      @history = []
+      @history = Chats::History.new
     end
 
     def ask(prompt)
       @prompt = prompt
       @role = "user"
-      handle_response(Client.call(messages))
+      handle_response(Client.call(chat_history))
     end
 
     private
@@ -29,8 +32,8 @@ module FuncBot
       response.dig("choices", 0, "message", "function_call").present?
     end
 
-    def messages
-      @history << {role: @role, content: prompt}
+    def chat_history
+      @history.push_prompt(role, prompt)
     end
   end
 end
