@@ -15,12 +15,12 @@ RSpec.describe FuncBot::Bot, :vcr do
 
   describe "#ask(prompt)" do
     before do
-      allow(FuncBot::Client).to receive(:call).and_return(response)
+      allow(FuncBot::Chats::Client).to receive(:call).and_return(response)
     end
 
     context "when the response is a function call" do
       before do
-        allow(FuncBot::Client).to receive(:call).and_return(function_response)
+        allow(FuncBot::Chats::Client).to receive(:call).and_return(function_response)
       end
 
       it "calls Functions::Handler.call with the response and history" do
@@ -37,7 +37,7 @@ RSpec.describe FuncBot::Bot, :vcr do
           expect(FuncBot::Functions::Handler).to receive(:call)
 
           subject.send(:handle_response,
-            FuncBot::Client.call(
+            FuncBot::Chats::Client.call(
               [
                 {
                   "role" => "user",

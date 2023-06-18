@@ -13,7 +13,7 @@ module FuncBot
     def ask(prompt)
       @prompt = prompt
       @role = "user"
-      handle_response(Client.call(chat_history))
+      handle_response(Chats::Client.call(chat_history))
     end
 
     private

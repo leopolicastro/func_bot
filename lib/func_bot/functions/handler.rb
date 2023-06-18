@@ -29,7 +29,7 @@ module FuncBot
 
         def respond_to(prompt)
           @prompt = prompt
-          Client.call(messages)
+          Chats::Client.call(messages)
         end
 
         def messages

@@ -40,7 +40,7 @@ RSpec.describe FuncBot::Functions::Handler do
 
     it "adds the function's response to the history" do
       FuncBot::Functions::Handler.call(response, history)
-      expect(history).to eq([{role: "func_bot", content: "content_value"}])
+      expect(history).to eq([{role: "assistant", content: "content_value"}])
     end
   end
 
@@ -79,7 +79,7 @@ RSpec.describe FuncBot::Functions::Handler do
       allow(FuncBot::Functions::Handler).to receive(:messages)
         .and_return([{role: "function", content: prompt, name: nil}])
 
-      expect(FuncBot::Client).to receive(:call)
+      expect(FuncBot::Chats::Client).to receive(:call)
         .with([{role: "function", content: prompt, name: nil}])
 
       FuncBot::Functions::Handler.respond_to(prompt)
@@ -95,7 +95,7 @@ RSpec.describe FuncBot::Functions::Handler do
         .and_return(function_name)
 
       result = FuncBot::Functions::Handler.messages
-      expect(result).to eq([{:content => "content_value", :role => "func_bot"},
+      expect(result).to eq([{:content => "content_value", :role => "assistant"},
         {:content => "prompt_message", :name => "function_name", :role => "function"}])
     end
   end
