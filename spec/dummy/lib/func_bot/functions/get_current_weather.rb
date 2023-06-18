@@ -5,7 +5,7 @@
 
 module FuncBot
   module Functions
-    class GetCurrentWeather
+    class GetCurrentWeather < Base
       class << self
         def call(response)
           weather_info = {
@@ -16,12 +16,6 @@ module FuncBot
           }
 
           JSON.dump(weather_info)
-        end
-
-        private
-
-        def parsed_response(response)
-          JSON.parse(response.dig("choices", 0, "message", "function_call", "arguments"))["location"]
         end
       end
     end
