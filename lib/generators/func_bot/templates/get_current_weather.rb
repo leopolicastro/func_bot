@@ -9,10 +9,9 @@ module FuncBot
       class << self
         def call(response)
           weather_info = {
-            location: parsed_response(response),
+            location: parsed_response(response)["location"],
             temperature: 98,
             forecast: ["sunny", "windy"]
-
           }
 
           JSON.dump(weather_info)
@@ -21,7 +20,7 @@ module FuncBot
         private
 
         def parsed_response(response)
-          JSON.parse(response.dig("choices", 0, "message", "function_call", "arguments"))["location"]
+          JSON.parse(response.dig("choices", 0, "message", "function_call", "arguments"))
         end
       end
     end
