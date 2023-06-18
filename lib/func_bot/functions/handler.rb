@@ -11,7 +11,7 @@ module FuncBot
           @history = history
           function_return = constantize_function(response).call(response)
           response = respond_to(function_return)
-          history << {role: "func_bot", content: dig_for_content(response)}
+          history << {role: "assistant", content: dig_for_content(response)}
           dig_for_content(response)
         end
 
