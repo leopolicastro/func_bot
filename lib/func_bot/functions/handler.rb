@@ -1,4 +1,4 @@
-require_relative "../client"
+# frozen_string_literal: true
 
 module FuncBot
   module Functions

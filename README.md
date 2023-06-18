@@ -35,8 +35,8 @@ rails g func_bot:function <function_name>
 ```ruby
 # Uses sample function GetCurrentWeather, can be found in lib/generators/func_bot/templates/get_current_weather.rb
 
-bot = FuncBot::Chat.new
-#<FuncBot::Chat:0x000000010d2d27e8 @history=[]>
+bot = FuncBot::Bot.new
+#<FuncBot::Bot:0x000000010d2d27e8 @history=[]>
 bot.ask("What's the weather like in Miami, FL")
 => "The current weather in Miami, FL is sunny and windy with a temperature of 98 degrees Fahrenheit."
 ```

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FuncBot
   class Client
     def self.call(messages)

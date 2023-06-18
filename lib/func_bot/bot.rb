@@ -1,9 +1,7 @@
-require_relative "functions/handler"
-require_relative "chats/handler"
-require_relative "chats/history"
+# frozen_string_literal: true
 
 module FuncBot
-  class Chat
+  class Bot
     attr_accessor :role, :prompt
 
     delegate :history, to: :@history

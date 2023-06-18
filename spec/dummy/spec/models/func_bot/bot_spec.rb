@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe FuncBot::Chat, :vcr do
+RSpec.describe FuncBot::Bot, :vcr do
   let(:prompt) { "Hello, world!" }
   let(:response) { {"choices" => [{"message" => {"content" => "Response content"}}]} }
   let(:function_response) { {"choices" => [{"message" => {"function_call" => true}}]} }
@@ -35,6 +35,7 @@ RSpec.describe FuncBot::Chat, :vcr do
       it "calls Functions::Handler.call with the response and history" do
         VCR.use_cassette("func_bot/chat/handle_response") do
           expect(FuncBot::Functions::Handler).to receive(:call)
+
           subject.send(:handle_response,
             FuncBot::Client.call(
               [
@@ -66,13 +67,13 @@ RSpec.describe FuncBot::Chat, :vcr do
     end
   end
 
-  describe "#messages" do
+  describe "#chat_history" do
     before do
       subject.role = "user"
       subject.prompt = prompt
     end
     it "adds a new message to the history with the user role and prompt content" do
-      expect { subject.send(:messages) }.to change { subject.history.length }.by(1)
+      expect { subject.send(:chat_history) }.to change { subject.history.length }.by(1)
       expect(subject.history.last).to eq({role: "user", content: prompt})
     end
   end
