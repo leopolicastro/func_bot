@@ -1,4 +1,5 @@
 require_relative "functions/handler"
+require_relative "chats/handler"
 
 module FuncBot
   class Chat
@@ -11,7 +12,6 @@ module FuncBot
     def ask(prompt)
       @prompt = prompt
       @role = "user"
-
       handle_response(Client.call(messages))
     end
 
@@ -21,7 +21,7 @@ module FuncBot
       if function_call?(response)
         Functions::Handler.call(response, history)
       else
-        handle_chat_response(response)
+        Chats::Handler.call(response, history)
       end
     end
 
@@ -29,17 +29,8 @@ module FuncBot
       response.dig("choices", 0, "message", "function_call").present?
     end
 
-    def handle_chat_response(response)
-      history << {role: "assistant", content: dig_for_content(response)}
-      dig_for_content(response)
-    end
-
-    def dig_for_content(response)
-      response.dig("choices", 0, "message", "content")
-    end
-
     def messages
-      history << {role: @role, content: prompt}
+      @history << {role: @role, content: prompt}
     end
   end
 end

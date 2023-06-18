@@ -18,17 +18,6 @@ RSpec.describe FuncBot::Chat, :vcr do
       allow(FuncBot::Client).to receive(:call).and_return(response)
     end
 
-    context "when the response is not a function call" do
-      it "calls handle_chat_response with the response" do
-        expect(subject).to receive(:handle_chat_response).with(response)
-        subject.ask(prompt)
-      end
-
-      it "adds the chat response to the history" do
-        expect { subject.ask(prompt) }.to change { subject.history.length }.by(2)
-      end
-    end
-
     context "when the response is a function call" do
       before do
         allow(FuncBot::Client).to receive(:call).and_return(function_response)
@@ -60,8 +49,8 @@ RSpec.describe FuncBot::Chat, :vcr do
     end
 
     context "when the response is not a function call" do
-      it "calls handle_chat_response with the response" do
-        expect(subject).to receive(:handle_chat_response).with(response)
+      it "calls the Chats::Handler.call method" do
+        expect(FuncBot::Chats::Handler).to receive(:call)
         subject.send(:handle_response, response)
       end
     end
@@ -74,22 +63,6 @@ RSpec.describe FuncBot::Chat, :vcr do
 
     it "returns false if the response does not contain a function_call" do
       expect(subject.send(:function_call?, response)).to be_falsey
-    end
-  end
-
-  describe "#handle_chat_response" do
-    it "adds the chat response to the history" do
-      expect { subject.send(:handle_chat_response, response) }.to change { subject.history.length }.by(1)
-    end
-
-    it "returns the content of the chat response" do
-      expect(subject.send(:handle_chat_response, response)).to eq("Response content")
-    end
-  end
-
-  describe "#dig_for_content" do
-    it "returns the content from the response" do
-      expect(subject.send(:dig_for_content, response)).to eq("Response content")
     end
   end
 
