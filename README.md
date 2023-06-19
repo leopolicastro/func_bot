@@ -1,6 +1,6 @@
 # FuncBot
 
-FuncBot is a Rails gem built on top of the [ruby-openai](https://github.com/alexrudall/ruby-openai) gem that allows you to easily create chatbots that can answer questions by calling on functions that you define.
+FuncBot is a Rails gem built on top of the [ruby-openai](https://github.com/alexrudall/ruby-openai) gem. It allows you to easily create chatbots that can answer questions by calling on functions you define. It's goal is to provide a simple interface to consume [OpenAI's Function Calling API](https://openai.com/blog/function-calling-and-other-api-updates?ref=upstract.com).
 
 ## Usage
 
@@ -78,6 +78,13 @@ $ gem install func_bot
 ```bash
 rails g func_bot:install
 
+```
+
+- Make sure to add your OpenAI API key to your credentials file or update the `config/initializers/openai.rb` file accordingly.
+
+```yml
+openai:
+  api_key: your-private-key
 ```
 
 ## Testing
