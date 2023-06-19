@@ -20,20 +20,6 @@ RSpec.describe FuncBot::Handlers::FunctionHandler do
         ]
       }
     end
-
-    before do
-      allow(FuncBot::Handlers::FunctionHandler).to receive(:constantize_function)
-        .with(response)
-        .and_return(double(:execute))
-
-      allow(FuncBot::Handlers::FunctionHandler).to receive(:respond_to)
-        .with(function_return)
-        .and_return(response_data)
-
-      allow(FuncBot::Handlers::FunctionHandler).to receive(:dig_for_content)
-        .with(response_data)
-        .and_return("content_value")
-    end
   end
 
   describe ".constantize_function" do

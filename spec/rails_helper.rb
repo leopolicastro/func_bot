@@ -6,11 +6,6 @@ require_relative File.expand_path("../dummy/config/environment", __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
-require "factory_bot_rails"
-require "faker"
-require "shoulda-matchers"
-require "byebug"
-require "vcr"
 
 # require_relative "../lib/generators/func_bot/templates/get_current_weather"
 
@@ -67,9 +62,4 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-end
-
-VCR.configure do |config|
-  config.cassette_library_dir = "spec/cassettes"
-  config.hook_into :webmock
 end

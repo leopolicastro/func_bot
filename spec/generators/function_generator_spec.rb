@@ -1,13 +1,7 @@
 require "rails_helper"
-require "generator_spec"
-
-require_relative "../../lib/generators/func_bot/function_generator"
 
 RSpec.describe FuncBot::FunctionGenerator, type: :generator do
-  # destination File.expand_path("../../tmp", __FILE__)
-
   before do
-    # prepare_destination
     run_generator ["function_name"]
   end
 
