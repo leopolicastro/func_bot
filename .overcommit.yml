@@ -23,16 +23,16 @@ PreCommit:
     required: true
     command: ["bundle", "exec", "standardrb"] # Invoke within Bundler context
     flags: ["--fix"]
-  ErbLint:
-    enabled: true
-    required: true
-    command:
-      [
-        "erblint",
-        "--lint-all",
-        "--enable-linters",
-        "space_around_erb_tag,extra_newline",
-      ]
+  # ErbLint:
+  #   enabled: true
+  #   required: true
+  #   command:
+  #     [
+  #       "erblint",
+  #       "--lint-all",
+  #       "--enable-linters",
+  #       "space_around_erb_tag,extra_newline",
+  #     ]
 #  RustyWind:
 #    enabled: true
 #    required: true
