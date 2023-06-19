@@ -19,18 +19,20 @@ module FuncBot
     end
 
     def function_template
-      {name: "#{class_name}Function",
-       description: "TODO: Write a description for this function.",
-       parameters: {
-         type: "TODO: choose from string, integer, boolean, object, etc.",
-         properties: {
-           location: {
-             type: "TODO: Write a type for this parameter. e.g. string, integer, etc.",
-             description: "TODO: Write a description for this parameter."
-           }
-         },
-         required: ["TODO: list the required parameters here"]
-       }}
+      {
+        name: "#{class_name}Function",
+        description: "TODO: Write a description for this function.",
+        parameters: {
+          type: "TODO: choose from string, integer, boolean, object, etc.",
+          properties: {
+            location: {
+              type: "TODO: Write a type for this parameter. e.g. string, integer, etc.",
+              description: "TODO: Write a description for this parameter."
+            }
+          },
+          required: ["TODO: list the required parameters here"]
+        }
+      }
     end
   end
 end
