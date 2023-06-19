@@ -29,7 +29,7 @@ module FuncBot
              description: "TODO: Write a description for this parameter."
            }
          },
-         required: ["TODO: list the reuiqred parameters here"]
+         required: ["TODO: list the required parameters here"]
        }}
     end
   end
