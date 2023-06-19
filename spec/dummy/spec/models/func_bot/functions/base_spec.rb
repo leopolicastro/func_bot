@@ -2,7 +2,7 @@ require "rails_helper"
 
 require "json"
 
-RSpec.describe FuncBot::Functions::Base do
+RSpec.describe FuncBot::Functions::BaseFunction do
   let(:response) do
     {
       "choices" => [

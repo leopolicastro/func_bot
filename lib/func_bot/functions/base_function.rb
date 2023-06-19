@@ -2,7 +2,7 @@
 
 module FuncBot
   module Functions
-    class Base
+    class BaseFunction
       attr_reader :response
 
       def initialize(response)

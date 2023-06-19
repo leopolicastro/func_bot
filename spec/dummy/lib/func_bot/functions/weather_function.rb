@@ -5,7 +5,7 @@
 
 module FuncBot
   module Functions
-    class GetCurrentWeather < Base
+    class WeatherFunction < BaseFunction
       def execute
         weather_info = {
           location: parsed_response["location"],

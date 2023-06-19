@@ -1,18 +1,10 @@
 module FuncBot
   module Functions
-    class <%= class_name %>
-
-      class << self
-        def call(response)
-          # Add your function logic here.
-          # Your function should return a JSON string
-        end
-
-        private
-
-        def parsed_response(response)
-          JSON.parse(response.dig("choices", 0, "message", "function_call", "arguments"))
-        end
+    class <%= class_name %>Function < BaseFunction
+      def execute
+        # Add your function logic here.
+        # eg. data = {some: "data"}
+        # JSON.dump(data)
       end
     end
   end

@@ -1,5 +1,5 @@
 functions:
-  - name: GetCurrentWeather
+  - name: WeatherFunction
     description: Get the current weather forecast for a given location.
     parameters:
       type: object

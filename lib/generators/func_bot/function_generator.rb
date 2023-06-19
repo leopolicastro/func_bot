@@ -3,7 +3,7 @@ module FuncBot
     source_root File.expand_path("templates", __dir__)
 
     def generate_function
-      template "function.rb", "lib/func_bot/functions/#{file_name}.rb"
+      template "function.rb", "lib/func_bot/functions/#{file_name}_function.rb"
     end
 
     def append_to_functions_list
@@ -19,7 +19,7 @@ module FuncBot
     end
 
     def function_template
-      {name: class_name.to_s,
+      {name: "#{class_name}Function",
        description: "TODO: Write a description for this function.",
        parameters: {
          type: "TODO: choose from string, integer, boolean, object, etc.",

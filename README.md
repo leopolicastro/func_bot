@@ -1,6 +1,6 @@
 # FuncBot
 
-FuncBot is a Ruby gem that allows you to create a chatbot that can answer questions by calling and parsing functions that you define.
+FuncBot is a Rails gem built on top of [Ruby OpenAI](`https://github.com/alexrudall/ruby-openai`) that allows you to create chat bots that can answer questions by calling on functions that you define.
 
 ## Usage
 
@@ -17,34 +17,29 @@ rails g func_bot:function <function_name>
   - A function can be as simple or as complex as you want it to be. You can call external APIs, parse the response, and return a JSON string that the bot will process and return to the user.
   - All functions must have a `call` method that takes in the response from the user and returns a JSON string.
     - Outside of the `call` method, you can define any other methods that you want to use in your function.
-  - Here's a sample function that returns the current weather in a location that the user asks about.
+  - Here's a sample function that returns the current weather for the given location.
 
-  ```ruby
-  module FuncBot
-    module Functions
-      class GetCurrentWeather
-        class << self
-          def call(response)
-            # mocks a call to the weather API.
+    ```ruby
+    module FuncBot
+      module Functions
+        class WeatherFunction < BaseFunction
+          def execute
             weather_info = {
-              location: parsed_response(response)["location"],
+              location: parsed_response["location"],
               temperature: 98,
               forecast: ["sunny", "windy"]
             }
+
             JSON.dump(weather_info)
-          end
-
-          private
-
-          def parsed_response(response)
-            # parse the response from OpenAI's ChatGPT
-            JSON.parse(response.dig("choices", 0, "message", "function_call", "arguments"))
           end
         end
       end
     end
-  end
-  ```
+    ```
+
+  - The `parsed_response` and `response` methods are available to any Function Class you generate.
+    - `parsed_response` is a hash that contains the parsed response from OpenAI.
+    - `response` is the raw response from OpenAI.
 
 - Update your new function in the list of functions in `lib/func_bot/functions/list.yml`.
   - This is the list of functions that will be available to the bot with every request
@@ -54,7 +49,6 @@ rails g func_bot:function <function_name>
 `bin/rails c`
 
 ```ruby
-# Uses sample function GetCurrentWeather, can be found in lib/generators/func_bot/templates/get_current_weather.rb
 irb(main):001:0> bot = FuncBot::Bot.new
 => #<FuncBot::Bot:0x0000000105ecd8e8 @history=#<FuncBot::Bots::History:0x0000000105ecd848 @history=[]>>
 irb(main):002:0> bot.ask "What's the weather like in Miami, FL?"

@@ -27,10 +27,10 @@ RSpec.describe FuncBot::Handlers::FunctionHandler do
       response = double("response")
       allow(FuncBot::Handlers::FunctionHandler).to receive(:function_name)
         .with(response)
-        .and_return("GetCurrentWeather")
+        .and_return("WeatherFunction")
 
       result = FuncBot::Handlers::FunctionHandler.constantize_function(response)
-      expect(result).to eq("FuncBot::Functions::GetCurrentWeather".constantize)
+      expect(result).to eq("FuncBot::Functions::WeatherFunction".constantize)
     end
   end
 
