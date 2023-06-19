@@ -6,17 +6,14 @@
 module FuncBot
   module Functions
     class GetCurrentWeather < Base
-      class << self
-        def call(response)
-          weather_info = {
-            location: parsed_response(response),
-            temperature: 98,
-            forecast: ["sunny", "windy"]
+      def execute
+        weather_info = {
+          location: parsed_response["location"],
+          temperature: 98,
+          forecast: ["sunny", "windy"]
+        }
 
-          }
-
-          JSON.dump(weather_info)
-        end
+        JSON.dump(weather_info)
       end
     end
   end

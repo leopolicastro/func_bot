@@ -3,10 +3,14 @@
 module FuncBot
   module Functions
     class Base
-      class << self
-        def parsed_response(response)
-          JSON.parse(response.dig("choices", 0, "message", "function_call", "arguments"))
-        end
+      attr_reader :response
+
+      def initialize(response)
+        @response = response
+      end
+
+      def parsed_response
+        JSON.parse(response.dig("choices", 0, "message", "function_call", "arguments"))
       end
     end
   end

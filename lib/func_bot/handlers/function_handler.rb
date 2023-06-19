@@ -3,15 +3,15 @@
 module FuncBot
   module Handlers
     class FunctionHandler
-      attr_reader :prompt, :history
+      attr_accessor :prompt, :history
 
       class << self
         def call(response, history)
           @function_name = nil
           @history = history
-          function_return = constantize_function(response).call(response)
+          function_return = constantize_function(response).new(response).execute
           response = respond_to(function_return)
-          history << {role: "assistant", content: dig_for_content(response)}
+          history << Bots::Message.new("assistant", dig_for_content(response)).data
           dig_for_content(response)
         end
 
@@ -33,7 +33,7 @@ module FuncBot
         end
 
         def messages
-          @history << {role: "function", content: @prompt, name: function_name}
+          @history << Bots::Message.new("function", @prompt, function_name).data
         end
       end
     end

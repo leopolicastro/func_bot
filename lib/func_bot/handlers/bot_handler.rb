@@ -5,7 +5,7 @@ module FuncBot
     class BotHandler
       class << self
         def call(response, history)
-          history << {role: "assistant", content: dig_for_content(response)}
+          history << Bots::Message.new("assistant", dig_for_content(response)).data
           dig_for_content(response)
         end
 

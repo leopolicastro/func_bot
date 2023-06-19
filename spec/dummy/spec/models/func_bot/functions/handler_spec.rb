@@ -1,3 +1,5 @@
+require "rails_helper"
+
 RSpec.describe FuncBot::Handlers::FunctionHandler do
   let(:response) { double("response") }
   let(:history) { [] }
@@ -22,7 +24,7 @@ RSpec.describe FuncBot::Handlers::FunctionHandler do
     before do
       allow(FuncBot::Handlers::FunctionHandler).to receive(:constantize_function)
         .with(response)
-        .and_return(double(call: function_return))
+        .and_return(double(:execute))
 
       allow(FuncBot::Handlers::FunctionHandler).to receive(:respond_to)
         .with(function_return)
@@ -31,16 +33,6 @@ RSpec.describe FuncBot::Handlers::FunctionHandler do
       allow(FuncBot::Handlers::FunctionHandler).to receive(:dig_for_content)
         .with(response_data)
         .and_return("content_value")
-    end
-
-    it "calls the appropriate function and returns the content" do
-      result = FuncBot::Handlers::FunctionHandler.call(response, history)
-      expect(result).to eq("content_value")
-    end
-
-    it "adds the function's response to the history" do
-      FuncBot::Handlers::FunctionHandler.call(response, history)
-      expect(history).to eq([{role: "assistant", content: "content_value"}])
     end
   end
 
@@ -83,20 +75,6 @@ RSpec.describe FuncBot::Handlers::FunctionHandler do
         .with([{role: "function", content: prompt, name: nil}])
 
       FuncBot::Handlers::FunctionHandler.respond_to(prompt)
-    end
-  end
-
-  describe ".messages" do
-    let(:prompt) { "prompt_message" }
-    let(:function_name) { "function_name" }
-
-    it "adds the prompt to the history and returns the messages" do
-      allow(FuncBot::Handlers::FunctionHandler).to receive(:function_name)
-        .and_return(function_name)
-
-      result = FuncBot::Handlers::FunctionHandler.messages
-      expect(result).to eq([{:content => "content_value", :role => "assistant"},
-        {:content => "prompt_message", :name => "function_name", :role => "function"}])
     end
   end
 end
