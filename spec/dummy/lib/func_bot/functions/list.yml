@@ -9,3 +9,13 @@ functions:
           description: The city and state eg. 'Miami, FL'
       required:
         - location
+  - :name: CryptoPriceFunction
+    :description: "Gets the current price of the given cryptocurrency."
+    :parameters:
+      :type: "object"
+      :properties:
+        :coin:
+          :type: "string"
+          :description: "The cryptocurrency to get the price of. eg. 'BTC'"
+      :required:
+        - coin
