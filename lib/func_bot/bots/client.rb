@@ -13,7 +13,7 @@ module FuncBot
         open_ai.chat(
           parameters: {
             model: "gpt-3.5-turbo-0613",
-            messages: bot.history.messages,
+            messages: bot.history.payload,
             temperature: 0.7,
             functions: function_list
           }

@@ -18,9 +18,9 @@ module FuncBot
             history.chronicle("user", "Hello")
           }.to change(history.messages, :size).by(1)
 
-          expect(history.messages.last).to be_a(Hash)
-          expect(history.messages.last[:role]).to eq("user")
-          expect(history.messages.last[:content]).to eq("Hello")
+          expect(history.messages.last).to be_a(FuncBot::Bots::Message)
+          expect(history.messages.last.data[:role]).to eq("user")
+          expect(history.messages.last.data[:content]).to eq("Hello")
         end
       end
     end

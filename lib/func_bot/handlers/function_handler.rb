@@ -13,7 +13,7 @@ module FuncBot
       def handle
         function_return = constantize_function.new(response).execute
         @response = respond_to(function_return)
-        bot.history.messages << Bots::Message.new("assistant", dig_for_content).data
+        bot.history.messages << Bots::Message.new("assistant", dig_for_content)
         dig_for_content
         # bot
       end
@@ -33,7 +33,7 @@ module FuncBot
       end
 
       def messages
-        bot.history.messages << Bots::Message.new("function", prompt, function_name).data
+        bot.history.messages << Bots::Message.new("function", prompt, function_name)
       end
     end
   end

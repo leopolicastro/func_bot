@@ -11,7 +11,7 @@ module FuncBot
       end
 
       def handle
-        bot.history.messages << Bots::Message.new("assistant", dig_for_content).data
+        bot.history.messages << Bots::Message.new("assistant", dig_for_content)
         dig_for_content
       end
     end
