@@ -37,6 +37,26 @@ rails g func_bot:function <function_name>
   - The `parsed_response` and `response` methods are available to all functions.
     - `parsed_response` is a hash that contains the response relevant to your function from OpenAI.
     - `response` is the raw response from OpenAI.
+  - Functions also have access to the `bot` attribute which returns the instance of the bot that called the function.
+
+    - This is useful if you need to access the bot's history or other methods.
+    - There might be times when you need to ask gpt a question from within a function, but you don't want to trigger the function again. You can set the `bot.include_functions` attribute to false before asking the question and then set it back to true after.
+
+    ```ruby
+    module FuncBot
+      module Functions
+        class SomeFunction < BaseFunction
+          def execute
+            bot.include_functions = false
+            response = bot.ask "Some question that you don't want to trigger any functions for"
+            bot.include_functions = true
+            do_something_with_response(response)
+            ....
+          end
+        end
+      end
+    end
+    ```
 
 - Update your new function in the list of functions in `app/lib/func_bot/functions/list.yml`.
   - This list of functions will be available to the bot with every request.
