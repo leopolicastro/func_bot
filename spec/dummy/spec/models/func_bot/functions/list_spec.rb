@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe FuncBot::Functions::List do
+  let(:bot) { FuncBot::Bot.new }
   describe ".call" do
     context "when list.yml file exists" do
       let(:functions) {
@@ -13,7 +14,7 @@ RSpec.describe FuncBot::Functions::List do
       end
 
       it "returns the functions from list.yml" do
-        expect(described_class.call).to eq(functions["functions"])
+        expect(described_class.call(bot)).to eq(functions["functions"])
       end
     end
 
@@ -23,7 +24,7 @@ RSpec.describe FuncBot::Functions::List do
       end
 
       it "raises an error" do
-        expect { described_class.call }.to raise_error("app/lib/func_bot/functions/list.yml file not found. Please create it by running rails func_bot:install.")
+        expect { described_class.call(bot) }.to raise_error("app/lib/func_bot/functions/list.yml file not found. Please create it by running rails func_bot:install.")
       end
     end
   end

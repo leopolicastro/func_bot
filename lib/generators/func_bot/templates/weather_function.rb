@@ -7,6 +7,7 @@ module FuncBot
   module Functions
     class WeatherFunction < BaseFunction
       def execute
+        bot.include_functions = false
         weather_info = {
           location: parsed_response["location"],
           temperature: 98,

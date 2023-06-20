@@ -12,12 +12,13 @@ require_relative "func_bot/functions/list"
 
 module FuncBot
   class Bot
-    attr_accessor :response
+    attr_accessor :response, :include_functions
     attr_reader :client, :history
 
     def initialize
       @history = Bots::History.new
       @client = Bots::Client.new(self)
+      @include_functions = true
     end
 
     def ask(prompt)

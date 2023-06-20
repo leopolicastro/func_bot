@@ -3,6 +3,7 @@ require "rails_helper"
 require "json"
 
 RSpec.describe FuncBot::Functions::BaseFunction do
+  let(:bot) { FuncBot::Bot.new }
   let(:response) do
     {
       "choices" => [
@@ -17,11 +18,15 @@ RSpec.describe FuncBot::Functions::BaseFunction do
     }
   end
 
-  subject { described_class.new(response) }
+  before do
+    bot.response = response
+  end
+
+  subject { described_class.new(bot) }
 
   describe "#initialize" do
     it "assigns the response" do
-      expect(subject.response).to eq(response)
+      expect(subject.bot.response).to eq(response)
     end
   end
 

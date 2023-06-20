@@ -3,15 +3,15 @@
 module FuncBot
   module Functions
     class BaseFunction
-      attr_reader :response
+      attr_reader :bot
 
-      def initialize(response)
-        @response = response
+      def initialize(bot)
+        @bot = bot
       end
 
       def parsed_response
         JSON.parse(
-          response.dig("choices", 0, "message", "function_call", "arguments")
+          bot.response.dig("choices", 0, "message", "function_call", "arguments")
         )
       end
     end

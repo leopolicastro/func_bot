@@ -17,7 +17,7 @@ module FuncBot
       private
 
       def function_data
-        constantize_function.new(bot.response).execute
+        constantize_function.new(bot).execute
       end
 
       def constantize_function

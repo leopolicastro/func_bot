@@ -15,7 +15,7 @@ module FuncBot
             model: "gpt-3.5-turbo-0613",
             messages: bot.history.payload,
             temperature: 0.7,
-            functions: FuncBot::Functions::List.call
+            functions: FuncBot::Functions::List.call(bot)
           }
         )
       end

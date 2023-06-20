@@ -13,7 +13,7 @@ RSpec.describe FuncBot::Bots::Client do
           model: "gpt-3.5-turbo-0613",
           messages: subject.bot.history.payload,
           temperature: 0.7,
-          functions: FuncBot::Functions::List.call
+          functions: FuncBot::Functions::List.call(bot)
         }
       )
       subject.call
