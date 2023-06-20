@@ -13,13 +13,13 @@ module FuncBot
     def ask(prompt)
       @prompt = prompt
       @role = "user"
-      add_prompt_to_history
       handle_response(call_openai)
     end
 
     private
 
     def call_openai
+      add_prompt_to_history
       client.call
     end
 
