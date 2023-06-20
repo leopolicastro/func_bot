@@ -2,18 +2,17 @@
 
 module FuncBot
   module Handlers
-    class BotHandler
-      class << self
-        def call(response, history)
-          history << Bots::Message.new("assistant", dig_for_content(response)).data
-          dig_for_content(response)
-        end
+    class BotHandler < BaseHandler
+      attr_accessor :response, :bot
 
-        private
+      def initialize(response, bot)
+        @response = response
+        @bot = bot
+      end
 
-        def dig_for_content(response)
-          response.dig("choices", 0, "message", "content")
-        end
+      def handle
+        bot.history.messages << Bots::Message.new("assistant", dig_for_content).data
+        dig_for_content
       end
     end
   end

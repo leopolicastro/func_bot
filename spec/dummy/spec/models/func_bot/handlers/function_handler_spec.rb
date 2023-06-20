@@ -2,34 +2,15 @@ require "rails_helper"
 
 RSpec.describe FuncBot::Handlers::FunctionHandler do
   let(:response) { double("response") }
-  let(:history) { [] }
-
-  describe ".call" do
-    let(:function_return) { double("function_return") }
-    let(:response_data) do
-      {
-        "choices" => [
-          {
-            "message" => {
-              "function_call" => {
-                "name" => "function_name"
-              },
-              "content" => "response_content"
-            }
-          }
-        ]
-      }
-    end
-  end
+  let(:bot) { FuncBot::Bot.new }
+  let(:subject) { described_class.new(response, bot) }
 
   describe ".constantize_function" do
     it "constantizes the function name and returns the function" do
-      response = double("response")
-      allow(FuncBot::Handlers::FunctionHandler).to receive(:function_name)
-        .with(response)
+      allow(subject).to receive(:function_name)
         .and_return("WeatherFunction")
 
-      result = FuncBot::Handlers::FunctionHandler.constantize_function(response)
+      result = subject.constantize_function
       expect(result).to eq("FuncBot::Functions::WeatherFunction".constantize)
     end
   end
@@ -37,7 +18,8 @@ RSpec.describe FuncBot::Handlers::FunctionHandler do
   describe ".function_name" do
     it "returns the function name from the response" do
       response = {"choices" => [{"message" => {"function_call" => {"name" => "function_name"}}}]}
-      result = FuncBot::Handlers::FunctionHandler.function_name(response)
+      subject.response = response
+      result = subject.function_name
       expect(result).to eq("function_name")
     end
   end
@@ -45,7 +27,8 @@ RSpec.describe FuncBot::Handlers::FunctionHandler do
   describe ".dig_for_content" do
     it "returns the content from the response" do
       response = {"choices" => [{"message" => {"content" => "response_content"}}]}
-      result = FuncBot::Handlers::FunctionHandler.dig_for_content(response)
+      subject.response = response
+      result = subject.dig_for_content
       expect(result).to eq("response_content")
     end
   end
@@ -54,13 +37,12 @@ RSpec.describe FuncBot::Handlers::FunctionHandler do
     let(:prompt) { "prompt_message" }
 
     it "calls Client.call with the messages" do
-      allow(FuncBot::Handlers::FunctionHandler).to receive(:messages)
+      allow(subject).to receive(:messages)
         .and_return([{role: "function", content: prompt, name: nil}])
 
-      expect(FuncBot::Bots::Client).to receive(:call)
-        .with([{role: "function", content: prompt, name: nil}])
+      expect(subject.bot.client).to receive(:call)
 
-      FuncBot::Handlers::FunctionHandler.respond_to(prompt)
+      subject.respond_to(prompt)
     end
   end
 end

@@ -1,13 +1,13 @@
 module FuncBot
   module Bots
     class History
-      attr_accessor :history
+      attr_accessor :messages
       def initialize
-        @history = []
+        @messages = []
       end
 
       def push_prompt(role, prompt)
-        @history << Message.new(role, prompt).data
+        messages << Message.new(role, prompt).data
       end
     end
   end

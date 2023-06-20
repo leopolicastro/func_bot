@@ -2,31 +2,32 @@
 
 module FuncBot
   class Bot
-    attr_accessor :role, :prompt
-
-    delegate :history, to: :@history
+    attr_accessor :role, :prompt, :history
+    attr_reader :client
 
     def initialize
       @history = Bots::History.new
+      @client = Bots::Client.new(self)
     end
 
     def ask(prompt)
       @prompt = prompt
       @role = "user"
+      add_prompt_to_history
       handle_response(call_openai)
     end
 
     private
 
     def call_openai
-      Bots::Client.call(chat_history)
+      client.call
     end
 
     def handle_response(response)
       if function_call?(response)
-        Handlers::FunctionHandler.call(response, history)
+        Handlers::FunctionHandler.new(response, self).handle
       else
-        Handlers::BotHandler.call(response, history)
+        Handlers::BotHandler.new(response, self).handle
       end
     end
 
@@ -34,8 +35,8 @@ module FuncBot
       response.dig("choices", 0, "message", "function_call").present?
     end
 
-    def chat_history
-      @history.push_prompt(role, prompt)
+    def add_prompt_to_history
+      history.push_prompt(role, prompt)
     end
   end
 end

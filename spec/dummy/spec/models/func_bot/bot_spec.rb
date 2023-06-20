@@ -4,27 +4,28 @@ RSpec.describe FuncBot::Bot, :vcr do
   let(:prompt) { "Hello, world!" }
   let(:response) { {"choices" => [{"message" => {"content" => "Response content"}}]} }
   let(:function_response) { {"choices" => [{"message" => {"function_call" => true}}]} }
-
   subject { described_class.new }
+  let(:bot_handler) { FuncBot::Handlers::BotHandler.new(response, subject) }
 
   describe "#initialize" do
     it "initializes history as an empty array" do
-      expect(subject.history).to eq([])
+      # expect it to be an instance of Bots::History
+      expect(subject.history).to be_an_instance_of(FuncBot::Bots::History)
     end
   end
 
   describe "#ask(prompt)" do
     before do
-      allow(FuncBot::Bots::Client).to receive(:call).and_return(response)
+      allow(subject.client).to receive(:call).and_return(response)
     end
 
     context "when the response is a function call" do
       before do
-        allow(FuncBot::Bots::Client).to receive(:call).and_return(function_response)
+        allow(subject.client).to receive(:call).and_return(function_response)
       end
 
       it "calls Handlers::FunctionHandler.call with the response and history" do
-        expect(FuncBot::Handlers::FunctionHandler).to receive(:call).with(function_response, subject.history)
+        expect_any_instance_of(FuncBot::Handlers::FunctionHandler).to receive(:handle)
         subject.ask(prompt)
       end
     end
@@ -34,24 +35,20 @@ RSpec.describe FuncBot::Bot, :vcr do
     context "when the response is a function call" do
       it "calls Handlers::FunctionHandler.call with the response and history" do
         VCR.use_cassette("func_bot/chat/handle_response") do
-          expect(FuncBot::Handlers::FunctionHandler).to receive(:call)
+          expect_any_instance_of(FuncBot::Handlers::FunctionHandler).to receive(:handle)
 
           subject.send(:handle_response,
-            FuncBot::Bots::Client.call(
-              [
-                {
-                  "role" => "user",
-                  "content" => "What is the weather like today in Miami, FL?"
-                }
-              ]
-            ))
+            subject.client.call)
         end
       end
     end
 
     context "when the response is not a function call" do
+      before do
+        allow(FuncBot::Handlers::BotHandler).to receive(:new).and_return(bot_handler)
+      end
       it "calls the Handlers::BotHandler.call method" do
-        expect(FuncBot::Handlers::BotHandler).to receive(:call)
+        expect(bot_handler).to receive(:handle)
         subject.send(:handle_response, response)
       end
     end
@@ -67,14 +64,14 @@ RSpec.describe FuncBot::Bot, :vcr do
     end
   end
 
-  describe "#chat_history" do
+  describe "#add_prompt_to_history" do
     before do
       subject.role = "user"
       subject.prompt = prompt
     end
     it "adds a new message to the history with the user role and prompt content" do
-      expect { subject.send(:chat_history) }.to change { subject.history.length }.by(1)
-      expect(subject.history.last).to eq({role: "user", content: prompt})
+      expect { subject.send(:add_prompt_to_history) }.to change { subject.history.messages.length }.by(1)
+      expect(subject.history.messages.last).to eq({role: "user", content: prompt})
     end
   end
 end
