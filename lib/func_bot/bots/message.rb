@@ -1,19 +1,19 @@
 module FuncBot
   module Bots
     class Message
-      attr_accessor :role, :prompt, :name
+      attr_accessor :role, :content, :name
 
-      def initialize(role, prompt, name = nil)
+      def initialize(role, content, name = nil)
         @role = role
-        @prompt = prompt
+        @content = content
         @name = name
       end
 
       def data
         if name.nil?
-          {role: role, content: prompt}
+          {role: role, content: content}
         else
-          {role: role, content: prompt, name: name}
+          {role: role, content: content, name: name}
         end
       end
     end
