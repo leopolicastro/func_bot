@@ -33,11 +33,13 @@ RSpec.describe FuncBot::Bot, :vcr do
 
   describe "#available_function?" do
     it "returns true if the response contains a function_call" do
-      expect(subject.send(:available_function?, function_response)).to be_truthy
+      subject.response = function_response
+      expect(subject.send(:available_function?)).to be_truthy
     end
 
     it "returns false if the response does not contain a function_call" do
-      expect(subject.send(:available_function?, response)).to be_falsey
+      subject.response = {}
+      expect(subject.send(:available_function?)).to be_falsey
     end
   end
 end

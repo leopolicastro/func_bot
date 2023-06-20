@@ -15,16 +15,12 @@ module FuncBot
             model: "gpt-3.5-turbo-0613",
             messages: bot.history.payload,
             temperature: 0.7,
-            functions: function_list
+            functions: FuncBot::Functions::List.call
           }
         )
       end
 
       private
-
-      def function_list
-        FuncBot::Functions::List.call
-      end
 
       def open_ai
         @client ||= OpenAI::Client.new

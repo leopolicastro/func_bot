@@ -3,10 +3,9 @@
 module FuncBot
   module Functions
     class Handler
-      attr_accessor :prompt, :bot, :response
+      attr_accessor :prompt, :bot
 
-      def initialize(response, bot)
-        @response = response
+      def initialize(bot)
         @bot = bot
       end
 
@@ -18,7 +17,7 @@ module FuncBot
       private
 
       def function_data
-        constantize_function.new(response).execute
+        constantize_function.new(bot.response).execute
       end
 
       def constantize_function
@@ -26,11 +25,11 @@ module FuncBot
       end
 
       def function_name
-        response.dig("choices", 0, "message", "function_call", "name")
+        bot.response.dig("choices", 0, "message", "function_call", "name")
       end
 
       def dig_for_content
-        response.dig("choices", 0, "message", "content")
+        bot.response.dig("choices", 0, "message", "content")
       end
     end
   end

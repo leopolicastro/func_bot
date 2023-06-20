@@ -12,8 +12,9 @@ require_relative "func_bot/functions/list"
 
 module FuncBot
   class Bot
+    attr_accessor :response
     attr_reader :client, :history
-    # attr_accessor :response
+
     def initialize
       @history = Bots::History.new
       @client = Bots::Client.new(self)
@@ -21,19 +22,19 @@ module FuncBot
 
     def ask(prompt)
       history.chronicle("user", prompt)
-      response = client.call
-      response = Functions::Handler.new(response, self).handle if available_function?(response)
-      history.chronicle("assistant", content(response))
-      history.chronicles.last.content
+      self.response = client.call
+      self.response = Functions::Handler.new(self).handle if available_function?
+      history.chronicle("assistant", content)
+      history.messages.last.content
     end
 
     private
 
-    def available_function?(response)
+    def available_function?
       response.dig("choices", 0, "message", "function_call").present?
     end
 
-    def content(response)
+    def content
       response.dig("choices", 0, "message", "content")
     end
   end
