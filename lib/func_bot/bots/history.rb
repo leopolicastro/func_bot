@@ -6,8 +6,12 @@ module FuncBot
         @messages = []
       end
 
-      def push_prompt(role, prompt)
+      def chronicle(role, prompt)
         messages << Message.new(role, prompt).data
+      end
+
+      def map_messages
+        messages.map(&:data)
       end
     end
   end

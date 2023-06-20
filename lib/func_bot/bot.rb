@@ -2,8 +2,7 @@
 
 module FuncBot
   class Bot
-    attr_accessor :role, :prompt, :history
-    attr_reader :client
+    attr_reader :client, :history
 
     def initialize
       @history = Bots::History.new
@@ -11,15 +10,13 @@ module FuncBot
     end
 
     def ask(prompt)
-      @prompt = prompt
-      @role = "user"
+      history.chronicle("user", prompt)
       handle_response(call_openai)
     end
 
     private
 
     def call_openai
-      add_prompt_to_history
       client.call
     end
 
@@ -33,10 +30,6 @@ module FuncBot
 
     def function_call?(response)
       response.dig("choices", 0, "message", "function_call").present?
-    end
-
-    def add_prompt_to_history
-      history.push_prompt(role, prompt)
     end
   end
 end

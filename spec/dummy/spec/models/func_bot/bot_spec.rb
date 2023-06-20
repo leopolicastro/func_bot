@@ -63,15 +63,4 @@ RSpec.describe FuncBot::Bot, :vcr do
       expect(subject.send(:function_call?, response)).to be_falsey
     end
   end
-
-  describe "#add_prompt_to_history" do
-    before do
-      subject.role = "user"
-      subject.prompt = prompt
-    end
-    it "adds a new message to the history with the user role and prompt content" do
-      expect { subject.send(:add_prompt_to_history) }.to change { subject.history.messages.length }.by(1)
-      expect(subject.history.messages.last).to eq({role: "user", content: prompt})
-    end
-  end
 end
