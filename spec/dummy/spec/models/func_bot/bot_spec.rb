@@ -31,26 +31,13 @@ RSpec.describe FuncBot::Bot, :vcr do
     end
   end
 
-  describe "#handle_response" do
-    context "when the response is a function call" do
-      it "calls Handlers::FunctionHandler.call with the response and history" do
-        VCR.use_cassette("func_bot/chat/handle_response") do
-          expect_any_instance_of(FuncBot::Functions::Handler).to receive(:handle).and_return(response)
-
-          subject.send(:handle_response,
-            subject.client.call)
-        end
-      end
-    end
-  end
-
-  describe "#function_call?" do
+  describe "#available_function?" do
     it "returns true if the response contains a function_call" do
-      expect(subject.send(:function_call?, function_response)).to be_truthy
+      expect(subject.send(:available_function?, function_response)).to be_truthy
     end
 
     it "returns false if the response does not contain a function_call" do
-      expect(subject.send(:function_call?, response)).to be_falsey
+      expect(subject.send(:available_function?, response)).to be_falsey
     end
   end
 end

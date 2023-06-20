@@ -13,7 +13,7 @@ require_relative "func_bot/functions/list"
 module FuncBot
   class Bot
     attr_reader :client, :history
-
+    # attr_accessor :response
     def initialize
       @history = Bots::History.new
       @client = Bots::Client.new(self)
@@ -21,22 +21,15 @@ module FuncBot
 
     def ask(prompt)
       history.chronicle("user", prompt)
-      handle_response(call_openai)
-    end
-
-    private
-
-    def call_openai
-      client.call
-    end
-
-    def handle_response(response)
-      response = Functions::Handler.new(response, self).handle if function_call?(response)
+      response = client.call
+      response = Functions::Handler.new(response, self).handle if available_function?(response)
       history.chronicle("assistant", content(response))
       history.chronicles.last.content
     end
 
-    def function_call?(response)
+    private
+
+    def available_function?(response)
       response.dig("choices", 0, "message", "function_call").present?
     end
 
