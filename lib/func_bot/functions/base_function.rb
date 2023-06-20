@@ -10,7 +10,9 @@ module FuncBot
       end
 
       def parsed_response
-        JSON.parse(response.dig("choices", 0, "message", "function_call", "arguments"))
+        JSON.parse(
+          response.dig("choices", 0, "message", "function_call", "arguments")
+        )
       end
     end
   end

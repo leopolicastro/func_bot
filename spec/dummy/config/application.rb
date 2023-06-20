@@ -21,9 +21,7 @@ require "func_bot"
 
 module Dummy
   class Application < Rails::Application
-    config.autoload_paths << Rails.root.join("lib")
     config.load_defaults Rails::VERSION::STRING.to_f
-
     # For compatibility with applications that use this config
     config.action_controller.include_all_helpers = false
 

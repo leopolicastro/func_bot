@@ -23,7 +23,7 @@ RSpec.describe FuncBot::Functions::List do
       end
 
       it "raises an error" do
-        expect { described_class.call }.to raise_error("lib/func_bot/functions/list.yml file not found. Please create it by running rails func_bot:install.")
+        expect { described_class.call }.to raise_error("app/lib/func_bot/functions/list.yml file not found. Please create it by running rails func_bot:install.")
       end
     end
   end

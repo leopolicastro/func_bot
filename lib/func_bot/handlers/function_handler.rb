@@ -3,9 +3,10 @@
 module FuncBot
   module Handlers
     class FunctionHandler
-      attr_accessor :prompt, :history
+      # attr_accessor :prompt, :history
 
       class << self
+        attr_accessor :prompt, :history
         def call(response, history)
           @function_name = nil
           @history = history
@@ -33,7 +34,7 @@ module FuncBot
         end
 
         def messages
-          @history << Bots::Message.new("function", @prompt, function_name).data
+          history << Bots::Message.new("function", @prompt, function_name).data
         end
       end
     end

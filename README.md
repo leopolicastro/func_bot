@@ -10,7 +10,7 @@ FuncBot is a Rails gem built on top of the [ruby-openai](https://github.com/alex
 rails g func_bot:function <function_name>
 ```
 
-- Update the function in `lib/func_bot/functions/<function_name>.rb`
+- Update the function in `app/lib/func_bot/functions/<function_name>.rb`
 
   - A function can be as simple or as complex as you need it to be. Your bot will process the results and express them to the user.
   - All functions must have an `execute` method.
@@ -38,7 +38,7 @@ rails g func_bot:function <function_name>
     - `parsed_response` is a hash that contains the response relevant to your function from OpenAI.
     - `response` is the raw response from OpenAI.
 
-- Update your new function in the list of functions in `lib/func_bot/functions/list.yml`.
+- Update your new function in the list of functions in `app/lib/func_bot/functions/list.yml`.
   - This list of functions will be available to the bot with every request.
   - Adding good descriptions to the functions will help the bot infer when to use which function.
 - If the user asks a question that is not related to a function in your list, the bot will just ask ChatGPT.

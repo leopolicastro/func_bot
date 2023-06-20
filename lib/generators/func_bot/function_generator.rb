@@ -3,7 +3,7 @@ module FuncBot
     source_root File.expand_path("templates", __dir__)
 
     def generate_function
-      template "function.rb", "lib/func_bot/functions/#{file_name}_function.rb"
+      template "function.rb", "app/lib/func_bot/functions/#{file_name}_function.rb"
     end
 
     def append_to_functions_list
@@ -15,7 +15,7 @@ module FuncBot
     private
 
     def yml_file
-      Rails.root.join("lib", "func_bot", "functions", "list.yml")
+      Rails.root.join("app", "lib", "func_bot", "functions", "list.yml")
     end
 
     def function_template

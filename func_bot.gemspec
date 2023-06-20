@@ -5,8 +5,8 @@ Gem::Specification.new do |spec|
   spec.version = FuncBot::VERSION
   spec.authors = ["lbp"]
   spec.email = ["43428385+leopolicastro@users.noreply.github.com"]
-  spec.summary = "Extensible AI FuncBot with Function calls."
-  spec.description = "Extensible AI FuncBot with Function calls."
+  spec.summary = "FuncBot is a Rails gem built on top of the ruby-openai gem. It helps you create chatbots that can answer questions by calling on functions you define. It's goal is to provide a simple interface to consume OpenAI's Function Calling API."
+  spec.description = spec.summary
   spec.homepage = "https://github.com/leopolicastro/func_bot"
   spec.license = "MIT"
 

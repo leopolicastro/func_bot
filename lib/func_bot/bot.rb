@@ -35,7 +35,7 @@ module FuncBot
     end
 
     def chat_history
-      history.push_prompt(role, prompt)
+      @history.push_prompt(role, prompt)
     end
   end
 end
