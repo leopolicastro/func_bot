@@ -11,7 +11,7 @@ RSpec.describe FuncBot::Bots::Client do
       expect(subject.send(:open_ai)).to receive(:chat).with(
         parameters: {
           model: "gpt-3.5-turbo-0613",
-          messages: subject.bot.history.messages,
+          messages: subject.bot.history.payload,
           temperature: 0.7,
           functions: FuncBot::Functions::List.call
         }

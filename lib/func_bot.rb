@@ -7,10 +7,8 @@ require_relative "func_bot/bots/client"
 require_relative "func_bot/bots/history"
 require_relative "func_bot/bots/message"
 require_relative "func_bot/functions/base_function"
+require_relative "func_bot/functions/handler"
 require_relative "func_bot/functions/list"
-require_relative "func_bot/handlers/base_handler"
-require_relative "func_bot/handlers/bot_handler"
-require_relative "func_bot/handlers/function_handler"
 
 module FuncBot
   class Bot
@@ -33,15 +31,17 @@ module FuncBot
     end
 
     def handle_response(response)
-      if function_call?(response)
-        Handlers::FunctionHandler.new(response, self).handle
-      else
-        Handlers::BotHandler.new(response, self).handle
-      end
+      response = Functions::Handler.new(response, self).handle if function_call?(response)
+      history.chronicle("assistant", content(response))
+      history.chronicles.last.content
     end
 
     def function_call?(response)
       response.dig("choices", 0, "message", "function_call").present?
+    end
+
+    def content(response)
+      response.dig("choices", 0, "message", "content")
     end
   end
 end

@@ -25,7 +25,7 @@ RSpec.describe FuncBot::Bot, :vcr do
       end
 
       it "calls Handlers::FunctionHandler.call with the response and history" do
-        expect_any_instance_of(FuncBot::Handlers::FunctionHandler).to receive(:handle)
+        expect_any_instance_of(FuncBot::Functions::Handler).to receive(:handle).and_return(response)
         subject.ask(prompt)
       end
     end
@@ -35,21 +35,11 @@ RSpec.describe FuncBot::Bot, :vcr do
     context "when the response is a function call" do
       it "calls Handlers::FunctionHandler.call with the response and history" do
         VCR.use_cassette("func_bot/chat/handle_response") do
-          expect_any_instance_of(FuncBot::Handlers::FunctionHandler).to receive(:handle)
+          expect_any_instance_of(FuncBot::Functions::Handler).to receive(:handle).and_return(response)
 
           subject.send(:handle_response,
             subject.client.call)
         end
-      end
-    end
-
-    context "when the response is not a function call" do
-      before do
-        allow(FuncBot::Handlers::BotHandler).to receive(:new).and_return(bot_handler)
-      end
-      it "calls the Handlers::BotHandler.call method" do
-        expect(bot_handler).to receive(:handle)
-        subject.send(:handle_response, response)
       end
     end
   end

@@ -1,18 +1,18 @@
 module FuncBot
   module Bots
     class History
-      attr_accessor :messages
+      attr_accessor :chronicles
 
       def initialize
-        @messages = []
+        @chronicles = []
       end
 
-      def chronicle(role, prompt)
-        messages << Message.new(role, prompt)
+      def chronicle(role, prompt, name = nil)
+        chronicles << Message.new(role, prompt, name)
       end
 
       def payload
-        messages.map(&:data)
+        chronicles.map(&:data)
       end
     end
   end
