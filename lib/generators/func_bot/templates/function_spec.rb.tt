@@ -1,0 +1,31 @@
+require "rails_helper"
+
+RSpec.describe FuncBot::Functions::<%= class_name %>Function do
+  let(:bot) { FuncBot::Bot.new }
+  let(:function_response) { described_class.new(bot).execute }
+  let(:function_arguments) do
+    {
+      "choices" => [
+        {
+          "message" => {
+            "function_call" => {
+              "arguments" => JSON.dump({key: "value"})
+            }
+          }
+        }
+      ]
+    }
+  end
+
+  before do
+    bot.response = function_arguments
+  end
+
+  describe "#execute" do
+    describe "FuncBot::Functions::<%= class_name %>Function" do
+      it "returns the expected data" do
+        expect(JSON.parse(function_response)["key"]).to eq("value")
+      end
+    end
+  end
+end

@@ -4,6 +4,7 @@ module FuncBot
 
     def generate_function
       template "function.rb", "app/lib/func_bot/functions/#{file_name}_function.rb"
+      template "function_spec.rb", "spec/models/func_bot/functions/#{file_name}_function_spec.rb" if defined?(RSpec)
     end
 
     def append_to_functions_list

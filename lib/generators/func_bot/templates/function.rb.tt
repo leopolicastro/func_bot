@@ -2,9 +2,8 @@ module FuncBot
   module Functions
     class <%= class_name %>Function < BaseFunction
       def execute
-        # Add your function logic here.
-        # eg. data = {some: "data"}
-        # JSON.dump(data)
+        data = {key: "value"}
+        JSON.dump(data)
       end
     end
   end
