@@ -25,7 +25,7 @@ $ gem install func_bot
 ## Setup
 
 ```bash
-rails g func_bot:install
+rails func_bot:install
 
 ```
 
